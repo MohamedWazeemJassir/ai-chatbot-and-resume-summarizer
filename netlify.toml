@@ -1,0 +1,14 @@
+[build]
+  command = "npm run build --workspace=packages/client"
+  publish = "packages/client/dist"
+  functions = "packages/server/netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  # include files the function reads at runtime (prompts, prisma, generated client)
+  included_files = ["packages/server/prompts/**", "packages/server/prisma/**", "packages/server/generated/**"]
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
